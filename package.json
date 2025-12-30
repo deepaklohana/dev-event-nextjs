@@ -11,15 +11,21 @@
   "dependencies": {
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv": "^17.2.3",
     "lucide-react": "^0.562.0",
+    "mongodb": "^7.0.0",
+    "mongoose": "^9.0.2",
     "next": "16.1.1",
     "ogl": "^1.0.11",
+    "posthog-js": "^1.310.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "slugify": "^1.6.6",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/dotenv": "^6.1.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
