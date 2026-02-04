@@ -43,7 +43,7 @@ const EventSchema = new Schema<IEvent>(
 
 // Pre-save hook for slug generation and date validation
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-EventSchema.pre('save', function (this: IEvent, next: any) {
+EventSchema.pre('save', async function (this: IEvent) {
     if (this.isModified('title')) {
         this.slug = slugify(this.title, { lower: true, strict: true });
     }
@@ -52,18 +52,21 @@ EventSchema.pre('save', function (this: IEvent, next: any) {
     if (this.isModified('date')) {
         const parsedDate = new Date(this.date);
         if (isNaN(parsedDate.getTime())) {
-            return next(new Error('Invalid date format'));
+            throw new Error('Invalid date format');
         }
         this.date = parsedDate.toISOString();
     }
 
     // Format time
     if (this.isModified('time') && !this.time) {
-        return next(new Error('Time is required'));
+        throw new Error('Time is required');
     }
-
-    next();
 });
+
+// In development, delete the model to allow for schema updates
+if (process.env.NODE_ENV === 'development' && models.Event) {
+    delete models.Event;
+}
 
 const Event = models.Event || model<IEvent>('Event', EventSchema);
 
